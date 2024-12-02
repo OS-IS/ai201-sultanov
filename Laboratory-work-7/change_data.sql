@@ -1,10 +1,7 @@
-CREATE OR REPLACE FUNCTION change_data(attribute1 VARCHAR, attribute2 INTEGER)
+CREATE OR REPLACE FUNCTION change_data(attr1_value TEXT, new_attr2_value TEXT)
 RETURNS VOID AS $$
-DECLARE
-    str VARCHAR;
 BEGIN
-    str := 'UPDATE office SET spot_conf = '  attribute2 
-           ' WHERE name = '''  attribute1  ''';';
-    EXECUTE str;
+    EXECUTE 'UPDATE office SET name = $2 WHERE address = $1'
+    USING new_attr2_value, attr1_value;
 END;
 $$ LANGUAGE plpgsql;
